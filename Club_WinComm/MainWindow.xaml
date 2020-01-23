@@ -7,10 +7,16 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded"
         Title="MainWindow" Height="450" Width="500">
+    <Window.Resources>
+        <local:BoolToString x:Key="BoolToString"/>
+    </Window.Resources>
     <Grid>
-        <StackPanel Orientation="Vertical" Margin="45,112,316,10">
+        <StackPanel Orientation="Vertical" Margin="62,61,280,31">
             <TextBlock Text="Enter text to filter:" TextWrapping="Wrap" FontSize="10" Foreground="Gray" ToolTip="Enter text to filter according to first name"/>
-            <TextBox x:Name="Tbx_filter" TextWrapping="Wrap" TextChanged="Tbx_filter_TextChanged" Margin="0,2,0,4"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBox x:Name="Tbx_filter" TextWrapping="Wrap" TextChanged="Tbx_filter_TextChanged" Width="110" Margin="0,0,5,0"/>
+                <TextBlock Text="{Binding ElementName=Lbx_members, Path=Items.Count}" TextAlignment="Center" Width="25" TextWrapping="Wrap"/>
+            </StackPanel>
             <ListBox x:Name="Lbx_members" Height="230">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -21,17 +27,24 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Content="+" FontSize="16" Width="50" Click="Btn_add_Click"/>
+            <StackPanel Margin="0,4,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Margin="0,0,5,0" x:Name="Btn_add" Content="+" FontSize="16" Width="50" Click="Btn_add_Click"/>
+                <Button x:Name="Btn_del" Content="-" FontSize="16" Width="50" Click="Btn_del_Click" Style="{StaticResource Style_btn_danger}"/>
+            </StackPanel>
 
         </StackPanel>
-        <StackPanel HorizontalAlignment="Left" Margin="228,152,0,29" Orientation="Vertical" DataContext="{Binding ElementName=Lbx_members, Path=SelectedItem}">
-            <StackPanel Orientation="Horizontal">
+        <StackPanel HorizontalAlignment="Left" Margin="250,118,0,117" Orientation="Vertical" DataContext="{Binding ElementName=Lbx_members, Path=SelectedItem}">
+            <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
                 <TextBlock Text="First Name" TextWrapping="Wrap" Width="70"/>
                 <TextBox Text="{Binding firstName}" TextWrapping="Wrap" Width="120"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Last Name" TextWrapping="Wrap" Width="70"/>
                 <TextBox Text="{Binding lastName}" TextWrapping="Wrap" Width="120"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Gender" TextWrapping="Wrap" Width="70"/>
+                <TextBox Text="{Binding gender, Converter={StaticResource BoolToString}}" TextWrapping="Wrap" Width="120"/>
             </StackPanel>
         </StackPanel>
 
